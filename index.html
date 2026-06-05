@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edge+ Pronostic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #f7f9f5;
+      --green-deep: #1a5c38;
+      --green-mid: #2d8653;
+      --green-light: #4caf78;
+      --green-pale: #e6f4ed;
+      --green-accent: #00c45a;
+      --gold: #c9a84c;
+      --text-dark: #111a14;
+      --text-mid: #3d5445;
+      --text-muted: #7a9985;
+      --border: #d4e8da;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 70px;
+      background: rgba(247,249,245,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: var(--green-deep);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo span {
+      background: var(--green-accent);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green-deep); }
+    .nav-cta {
+      background: var(--green-deep);
+      color: #fff !important;
+      padding: 8px 22px;
+      border-radius: 6px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--green-mid) !important; color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(76,175,120,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: 10%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,196,90,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-content { max-width: 680px; animation: fadeUp 0.9s ease both; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green-pale);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--green-mid);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+    .badge-dot { width: 7px; height: 7px; background: var(--green-accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05;
+      color: var(--text-dark);
+      margin-bottom: 24px;
+    }
+    h1 em { font-style: italic; color: var(--green-deep); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green-deep);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--green-deep);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--green-mid); transform: translateY(-1px); }
+
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--green-deep);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    /* ── SECTION HEADING ── */
+    .section { padding: 100px 5%; }
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--green-mid);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── PRONOSTICS ── */
+    #pronostics { background: var(--white); }
+    .pronostics-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 20px; }
+    .prono-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+
+    .prono-card {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      animation: fadeUp 0.7s ease both;
+    }
+    .prono-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(26,92,56,0.1); }
+    .prono-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--green-accent);
+    }
+    .prono-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .prono-league {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--green-mid); background: var(--green-pale); padding: 4px 10px; border-radius: 999px;
+    }
+    .prono-date { font-size: 0.78rem; color: var(--text-muted); }
+    .prono-match { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--text-dark); margin-bottom: 8px; }
+    .prono-tip { font-size: 0.88rem; color: var(--text-mid); margin-bottom: 20px; }
+    .prono-footer { display: flex; justify-content: space-between; align-items: center; }
+    .prono-cote {
+      display: flex; flex-direction: column;
+    }
+    .cote-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .cote-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--green-deep); line-height: 1; }
+    .prono-result {
+      font-size: 0.78rem; font-weight: 700; padding: 5px 14px; border-radius: 999px;
+    }
+    .result-win { background: #e6f9ef; color: #1a7a45; }
+    .result-pending { background: #fff8e6; color: #a07c00; }
+    .result-loss { background: #fce8e8; color: #c0392b; }
+
+    /* ── ANALYSES ── */
+    #analyses { background: var(--off-white); }
+    .analyses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; margin-top: 48px; }
+    .analyse-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .analyse-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(26,92,56,0.08); }
+    .analyse-img {
+      width: 100%; height: 180px;
+      background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .analyse-body { padding: 24px; }
+    .analyse-tag {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--green-mid); margin-bottom: 10px;
+    }
+    .analyse-title { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--text-dark); line-height: 1.3; margin-bottom: 10px; }
+    .analyse-excerpt { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 18px; font-weight: 300; }
+    .analyse-link { font-size: 0.85rem; font-weight: 600; color: var(--green-mid); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .analyse-link:hover { color: var(--green-deep); }
+
+    /* ── STATS PERSO ── */
+    #stats { background: var(--green-deep); color: #fff; }
+    #stats .section-tag { color: var(--green-accent); }
+    #stats .section-title { color: #fff; }
+    #stats .section-sub { color: rgba(255,255,255,0.6); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 56px; }
+    .stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-card:hover { background: rgba(255,255,255,0.12); }
+    .stat-card .big { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: var(--green-accent); line-height: 1; }
+    .stat-card .label { font-size: 0.82rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 8px; }
+    .stat-card .sublabel { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+    /* ── ABONNEMENT ── */
+    #abonnement { background: var(--white); }
+    .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 56px; }
+    .plan-card {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .plan-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(26,92,56,0.1); }
+    .plan-card.featured {
+      border-color: var(--green-mid);
+      background: var(--green-pale);
+    }
+    .plan-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--green-deep); color: #fff;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 5px 18px; border-radius: 999px;
+    }
+    .plan-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px; color: var(--text-dark); margin-bottom: 8px; }
+    .plan-price { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--green-deep); line-height: 1; }
+    .plan-price span { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+    .plan-desc { font-size: 0.85rem; color: var(--text-muted); margin: 12px 0 24px; line-height: 1.5; }
+    .plan-features { list-style: none; margin-bottom: 32px; }
+    .plan-features li {
+      font-size: 0.88rem; color: var(--text-mid); padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .plan-features li::before { content: '✓'; color: var(--green-accent); font-weight: 700; }
+    .plan-btn {
+      display: block; text-align: center;
+      background: var(--green-deep); color: #fff;
+      padding: 13px; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .plan-btn:hover { background: var(--green-mid); }
+    .plan-card:not(.featured) .plan-btn {
+      background: transparent; color: var(--green-deep); border: 2px solid var(--border);
+    }
+    .plan-card:not(.featured) .plan-btn:hover { border-color: var(--green-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text-dark);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 40px 5%;
+      font-size: 0.82rem;
+    }
+    footer .foot-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: #fff;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    footer a { color: var(--green-accent); text-decoration: none; }
+    .disclaimer { margin-top: 16px; font-size: 0.75rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .prono-card:nth-child(2) { animation-delay: 0.1s; }
+    .prono-card:nth-child(3) { animation-delay: 0.2s; }
+
+    /* ── NEWSLETTER ── */
+    #newsletter {
+      background: linear-gradient(135deg, var(--green-deep) 0%, #0f3d24 100%);
+      padding: 80px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+    #newsletter::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0,196,90,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .newsletter-inner {
+      max-width: 580px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .newsletter-inner .section-tag { color: var(--green-accent); }
+    .newsletter-inner .section-title { color: #fff; margin-bottom: 12px; }
+    .newsletter-inner p { color: rgba(255,255,255,0.65); font-size: 0.95rem; line-height: 1.6; margin-bottom: 32px; }
+    .newsletter-form {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .newsletter-form input {
+      flex: 1; min-width: 220px;
+      padding: 14px 20px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+    .newsletter-form input:focus { border-color: var(--green-accent); }
+    .newsletter-form button {
+      background: var(--green-accent);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+    .newsletter-form button:hover { background: #00a84d; transform: translateY(-1px); }
+    .newsletter-success {
+      display: none;
+      background: rgba(0,196,90,0.15);
+      border: 1px solid var(--green-accent);
+      border-radius: 10px;
+      padding: 16px 24px;
+      color: var(--green-accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 16px;
+    }
+    .newsletter-note { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 14px; }
+
+    /* ── TÉMOIGNAGES ── */
+    #temoignages { background: var(--off-white); }
+    .temo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
+    .temo-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .temo-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,92,56,0.08); }
+    .temo-stars { color: #f5a623; font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .temo-text {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .temo-text::before { content: '"'; font-size: 2rem; color: var(--green-accent); line-height: 0; vertical-align: -0.5rem; margin-right: 4px; font-style: normal; }
+    .temo-author { display: flex; align-items: center; gap: 12px; }
+    .temo-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--green-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
+    .temo-name { font-weight: 600; font-size: 0.88rem; color: var(--text-dark); }
+    .temo-info { font-size: 0.76rem; color: var(--text-muted); margin-top: 2px; }
+    .temo-gain {
+      position: absolute; top: 20px; right: 20px;
+      background: var(--green-pale);
+      color: var(--green-mid);
+      font-size: 0.72rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── HAMBURGER MENU MOBILE ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text-dark);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 70px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 5%;
+      z-index: 99;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      transition: background 0.15s;
+    }
+    .mobile-menu a:hover { background: var(--green-pale); color: var(--green-deep); }
+    .mobile-menu .mob-cta {
+      background: var(--green-deep);
+      color: #fff !important;
+      text-align: center;
+      margin-top: 8px;
+      font-weight: 700;
+    }
+    .mobile-menu .mob-cta:hover { background: var(--green-mid) !important; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .hero { padding: 100px 5% 60px; min-height: auto; }
+      .hero-stats { gap: 20px; flex-wrap: wrap; }
+      .hero-stats > div { flex: 1; min-width: 80px; }
+
+      .pronostics-header { flex-direction: column; align-items: flex-start; }
+      .prono-grid { grid-template-columns: 1fr; }
+      .analyses-grid { grid-template-columns: 1fr; }
+      .temo-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .plans-grid { grid-template-columns: 1fr; }
+
+      .section { padding: 64px 5%; }
+
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input, .newsletter-form button { width: 100%; }
+
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Edge<span>+</span> Pronostic</div>
+  <ul class="nav-links">
+    <li><a href="#pronostics">Pronostics</a></li>
+    <li><a href="#analyses">Analyses</a></li>
+    <li><a href="#temoignages">Avis</a></li>
+    <li><a href="#stats">Performances</a></li>
+    <li><a href="#abonnement" class="nav-cta">S'abonner</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#pronostics" onclick="closeMenu()">⚽ Pronostics</a>
+  <a href="#analyses" onclick="closeMenu()">📊 Analyses</a>
+  <a href="#temoignages" onclick="closeMenu()">💬 Avis clients</a>
+  <a href="#stats" onclick="closeMenu()">📈 Performances</a>
+  <a href="#newsletter" onclick="closeMenu()">📩 Newsletter</a>
+  <a href="#abonnement" class="mob-cta" onclick="closeMenu()">S'abonner →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span> Pronostics Football Premium</div>
+    <h1>L'avantage <em>décisif</em> pour vos paris</h1>
+    <p class="hero-sub">Des analyses approfondies, des statistiques avancées et des pronostics fiables pour maximiser vos gains sur les matchs de football.</p>
+    <div class="hero-actions">
+      <a href="#pronostics" class="btn-primary">Voir les pronostics →</a>
+      <a href="#stats" class="btn-secondary">Nos performances</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">73%</div>
+        <div class="stat-label">Taux de réussite</div>
+      </div>
+      <div>
+        <div class="stat-num">+340</div>
+        <div class="stat-label">Pronostics publiés</div>
+      </div>
+      <div>
+        <div class="stat-num">+18%</div>
+        <div class="stat-label">ROI mensuel moyen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRONOSTICS DU JOUR -->
+<section class="section" id="pronostics">
+  <div class="pronostics-header">
+    <div>
+      <div class="section-tag">⚽ Sélection du jour</div>
+      <div class="section-title">Pronostics du jour</div>
+    </div>
+    <a href="#" class="btn-secondary" style="font-size:0.85rem; padding:10px 22px;">Voir tout l'historique</a>
+  </div>
+  <div class="prono-grid">
+
+    <div class="prono-card">
+      <div class="prono-meta">
+        <span class="prono-league">Ligue 1</span>
+        <span class="prono-date">Aujourd'hui · 21h00</span>
+      </div>
+      <div class="prono-match">PSG — Marseille</div>
+      <div class="prono-tip">🎯 Victoire PSG + Plus de 2,5 buts</div>
+      <div class="prono-footer">
+        <div class="prono-cote">
+          <span class="cote-label">Cote</span>
+          <span class="cote-val">2.15</span>
+        </div>
+        <span class="prono-result result-pending">En attente</span>
+      </div>
+    </div>
+
+    <div class="prono-card">
+      <div class="prono-meta">
+        <span class="prono-league">Premier League</span>
+        <span class="prono-date">Hier · 20h45</span>
+      </div>
+      <div class="prono-match">Arsenal — Chelsea</div>
+      <div class="prono-tip">🎯 Les deux équipes marquent (BTTS)</div>
+      <div class="prono-footer">
+        <div class="prono-cote">
+          <span class="cote-label">Cote</span>
+          <span class="cote-val">1.78</span>
+        </div>
+        <span class="prono-result result-win">✓ Gagné</span>
+      </div>
+    </div>
+
+    <div class="prono-card">
+      <div class="prono-meta">
+        <span class="prono-league">Liga</span>
+        <span class="prono-date">Hier · 22h00</span>
+      </div>
+      <div class="prono-match">Real Madrid — Barça</div>
+      <div class="prono-tip">🎯 Match nul ou victoire Real (1X)</div>
+      <div class="prono-footer">
+        <div class="prono-cote">
+          <span class="cote-label">Cote</span>
+          <span class="cote-val">1.55</span>
+        </div>
+        <span class="prono-result result-win">✓ Gagné</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ANALYSES -->
+<section class="section" id="analyses">
+  <div class="section-tag">📊 Décryptage</div>
+  <div class="section-title">Analyses & Conseils</div>
+  <p class="section-sub">Des articles détaillés pour comprendre les marchés, affiner votre stratégie et mieux gérer votre bankroll.</p>
+  <div class="analyses-grid">
+
+    <div class="analyse-card">
+      <div class="analyse-img">📈</div>
+      <div class="analyse-body">
+        <div class="analyse-tag">Stratégie</div>
+        <div class="analyse-title">Comment gérer sa bankroll efficacement</div>
+        <div class="analyse-excerpt">La gestion du capital est la base de tout parieur rentable sur le long terme. Découvrez les meilleures méthodes.</div>
+        <a href="#" class="analyse-link">Lire l'article →</a>
+      </div>
+    </div>
+
+    <div class="analyse-card">
+      <div class="analyse-img">🔍</div>
+      <div class="analyse-body">
+        <div class="analyse-tag">Analyse</div>
+        <div class="analyse-title">Ligue 1 : les équipes en forme ce mois-ci</div>
+        <div class="analyse-excerpt">Bilan des dernières journées, tendances à exploiter et équipes à surveiller avant les prochaines échéances.</div>
+        <a href="#" class="analyse-link">Lire l'analyse →</a>
+      </div>
+    </div>
+
+    <div class="analyse-card">
+      <div class="analyse-img">⚽</div>
+      <div class="analyse-body">
+        <div class="analyse-tag">Matchs clés</div>
+        <div class="analyse-title">Top 5 des matchs à ne pas manquer ce week-end</div>
+        <div class="analyse-excerpt">Une sélection des affiches les plus intéressantes du week-end avec nos angles de jeu préférés.</div>
+        <a href="#" class="analyse-link">Lire la sélection →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS PERSO -->
+<section class="section" id="stats">
+  <div class="section-tag">📉 Transparence totale</div>
+  <div class="section-title">Nos performances en chiffres</div>
+  <p class="section-sub">Ici, rien n'est caché. Toutes nos statistiques sont vérifiables et mises à jour après chaque journée.</p>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="big">73%</div>
+      <div class="label">Taux de réussite</div>
+      <div class="sublabel">Sur les 30 derniers jours</div>
+    </div>
+    <div class="stat-card">
+      <div class="big">+18%</div>
+      <div class="label">ROI mensuel</div>
+      <div class="sublabel">Rendement sur investissement</div>
+    </div>
+    <div class="stat-card">
+      <div class="big">342</div>
+      <div class="label">Pronostics publiés</div>
+      <div class="sublabel">Depuis le lancement</div>
+    </div>
+    <div class="stat-card">
+      <div class="big">1.92</div>
+      <div class="label">Cote moyenne</div>
+      <div class="sublabel">Sur l'ensemble des tips</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABONNEMENT -->
+<section class="section" id="abonnement">
+  <div style="text-align:center;">
+    <div class="section-tag">💎 Offres</div>
+    <div class="section-title">Choisissez votre formule</div>
+    <p class="section-sub" style="margin:0 auto;">Accédez à nos pronostics premium et boostez vos résultats dès aujourd'hui.</p>
+  </div>
+  <div class="plans-grid">
+
+    <div class="plan-card">
+      <div class="plan-name">Gratuit</div>
+      <div class="plan-price">0€ <span>/ mois</span></div>
+      <div class="plan-desc">Idéal pour découvrir Edge+ Pronostic.</div>
+      <ul class="plan-features">
+        <li>1 pronostic gratuit / semaine</li>
+        <li>Accès aux analyses blog</li>
+        <li>Newsletter hebdomadaire</li>
+      </ul>
+      <a href="#" class="plan-btn">Commencer gratuitement</a>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-badge">⭐ Populaire</div>
+      <div class="plan-name">Premium</div>
+      <div class="plan-price">29€ <span>/ mois</span></div>
+      <div class="plan-desc">L'offre complète pour les parieurs sérieux.</div>
+      <ul class="plan-features">
+        <li>Tous les pronostics du jour</li>
+        <li>Analyses détaillées exclusives</li>
+        <li>Suivi bankroll personnalisé</li>
+        <li>Accès à la communauté privée</li>
+        <li>Alertes en temps réel</li>
+      </ul>
+      <a href="#" class="plan-btn">S'abonner maintenant</a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name">VIP</div>
+      <div class="plan-price">59€ <span>/ mois</span></div>
+      <div class="plan-desc">Pour les parieurs qui visent l'excellence.</div>
+      <ul class="plan-features">
+        <li>Tout Premium inclus</li>
+        <li>Pronostics VIP haute valeur</li>
+        <li>Consultation stratégie 1-to-1</li>
+        <li>Accès anticipé aux analyses</li>
+        <li>Support prioritaire</li>
+      </ul>
+      <a href="#" class="plan-btn">Devenir VIP</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="section" id="temoignages">
+  <div style="text-align:center; margin-bottom: 0;">
+    <div class="section-tag">💬 Ils nous font confiance</div>
+    <div class="section-title">Ce que disent nos abonnés</div>
+    <p class="section-sub" style="margin: 0 auto;">Des résultats concrets, vérifiables. Voici les retours de notre communauté.</p>
+  </div>
+  <div class="temo-grid">
+
+    <div class="temo-card">
+      <div class="temo-gain">+340€ ce mois</div>
+      <div class="temo-stars">★★★★★</div>
+      <div class="temo-text">Depuis que je suis Edge+, ma façon de parier a complètement changé. Les analyses sont sérieuses, les cotes bien choisies. Je ne parie plus à l'aveugle.</div>
+      <div class="temo-author">
+        <div class="temo-avatar">👨</div>
+        <div>
+          <div class="temo-name">Karim B.</div>
+          <div class="temo-info">Abonné Premium · Paris</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="temo-card">
+      <div class="temo-gain">+210€ ce mois</div>
+      <div class="temo-stars">★★★★★</div>
+      <div class="temo-text">J'ai essayé plusieurs sites de pronostics. Edge+ est le seul qui publie ses vraies stats sans les embellir. La transparence fait toute la différence.</div>
+      <div class="temo-author">
+        <div class="temo-avatar">👩</div>
+        <div>
+          <div class="temo-name">Sofia M.</div>
+          <div class="temo-info">Abonnée VIP · Lyon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="temo-card">
+      <div class="temo-gain">+180€ ce mois</div>
+      <div class="temo-stars">★★★★☆</div>
+      <div class="temo-text">Les pronostics sont bien argumentés avec des statistiques précises. Je gagne en régularité depuis 3 mois. Je recommande sans hésitation l'offre Premium.</div>
+      <div class="temo-author">
+        <div class="temo-avatar">👨</div>
+        <div>
+          <div class="temo-name">Thomas R.</div>
+          <div class="temo-info">Abonné Premium · Bordeaux</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="newsletter-inner">
+    <div class="section-tag">📩 Restez informé</div>
+    <div class="section-title">Recevez nos tips gratuitement</div>
+    <p>Inscrivez-vous à la newsletter Edge+ et recevez chaque semaine un pronostic gratuit, nos meilleures analyses et nos conseils bankroll directement dans votre boîte mail.</p>
+    <div class="newsletter-form">
+      <input type="email" id="emailInput" placeholder="Votre adresse email..." />
+      <button onclick="subscribeNewsletter()">Je m'inscris →</button>
+    </div>
+    <div class="newsletter-success" id="successMsg">✅ Parfait ! Vous êtes bien inscrit. Bienvenue dans la communauté Edge+ !</div>
+    <p class="newsletter-note">🔒 Pas de spam. Désinscription en 1 clic. Vos données restent privées.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Edge+ Pronostic</div>
+  <p>© 2026 Edge+ Pronostic · Tous droits réservés · <a href="#">Mentions légales</a> · <a href="#">Contact</a></p>
+  <p class="disclaimer">⚠️ Les paris sportifs comportent des risques. Jouez de façon responsable. Ce site ne garantit aucun gain. Réservé aux personnes majeures.</p>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const burger = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    burger.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+  function subscribeNewsletter() {
+    const email = document.getElementById('emailInput').value;
+    if (!email || !email.includes('@')) {
+      document.getElementById('emailInput').style.borderColor = '#e74c3c';
+      return;
+    }
+    document.getElementById('emailInput').style.borderColor = '';
+    document.querySelector('.newsletter-form').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+</script>
+</body>
+</html>
