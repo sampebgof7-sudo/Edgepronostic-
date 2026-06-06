@@ -773,67 +773,276 @@
   </div>
 </section>
 
-<!-- PRONOSTICS DU JOUR -->
-<section class="section" id="pronostics">
+<!-- CALENDRIER MONDIAL 2026 -->
+<section class="section" id="pronostics" style="background: var(--white);">
   <div class="pronostics-header">
     <div>
-      <div class="section-tag">⚽ Sélection du jour</div>
-      <div class="section-title">Pronostics du jour</div>
+      <div class="section-tag">🏆 Coupe du Monde FIFA 2026</div>
+      <div class="section-title">Calendrier Officiel — Phase de Groupes</div>
+      <p class="section-sub">Tous les matchs du Mondial 2026 · Horaires en heure française (Paris)</p>
     </div>
-    <a href="#" class="btn-secondary" style="font-size:0.85rem; padding:10px 22px;">Voir tout l'historique</a>
   </div>
-  <div class="prono-grid">
 
-    <div class="prono-card">
-      <div class="prono-meta">
-        <span class="prono-league">Ligue 1</span>
-        <span class="prono-date">Aujourd'hui · 21h00</span>
-      </div>
-      <div class="prono-match">PSG — Marseille</div>
-      <div class="prono-tip">🎯 Victoire PSG + Plus de 2,5 buts</div>
-      <div class="prono-footer">
-        <div class="prono-cote">
-          <span class="cote-label">Cote</span>
-          <span class="cote-val">2.15</span>
-        </div>
-        <span class="prono-result result-pending">En attente</span>
-      </div>
+  <!-- Filtres groupes -->
+  <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:32px;">
+    <button onclick="filterGroup('all')" id="btn-all" style="background:var(--green-deep);color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Tous</button>
+    <button onclick="filterGroup('A')" id="btn-A" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe A</button>
+    <button onclick="filterGroup('B')" id="btn-B" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe B</button>
+    <button onclick="filterGroup('C')" id="btn-C" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe C</button>
+    <button onclick="filterGroup('D')" id="btn-D" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe D</button>
+    <button onclick="filterGroup('E')" id="btn-E" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe E</button>
+    <button onclick="filterGroup('F')" id="btn-F" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe F</button>
+    <button onclick="filterGroup('G')" id="btn-G" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe G</button>
+    <button onclick="filterGroup('H')" id="btn-H" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe H</button>
+    <button onclick="filterGroup('I')" id="btn-I" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe I 🇫🇷</button>
+    <button onclick="filterGroup('J')" id="btn-J" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe J</button>
+    <button onclick="filterGroup('K')" id="btn-K" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe K</button>
+    <button onclick="filterGroup('L')" id="btn-L" style="background:var(--green-pale);color:var(--green-deep);border:1px solid var(--border);padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.82rem;">Groupe L</button>
+  </div>
+
+  <div class="prono-grid" id="matchGrid">
+
+    <!-- GROUPE A -->
+    <div class="prono-card" data-group="A">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe A</span><span class="prono-date">11 juin · 21h00</span></div>
+      <div class="prono-match">🇲🇽 Mexique — 🇿🇦 Afrique du Sud</div>
+      <div class="prono-tip">📍 Estadio Azteca · Mexico City</div>
+      <div class="prono-footer"><span class="prono-result result-pending">Match d'ouverture</span></div>
     </div>
 
-    <div class="prono-card">
-      <div class="prono-meta">
-        <span class="prono-league">Premier League</span>
-        <span class="prono-date">Hier · 20h45</span>
-      </div>
-      <div class="prono-match">Arsenal — Chelsea</div>
-      <div class="prono-tip">🎯 Les deux équipes marquent (BTTS)</div>
-      <div class="prono-footer">
-        <div class="prono-cote">
-          <span class="cote-label">Cote</span>
-          <span class="cote-val">1.78</span>
-        </div>
-        <span class="prono-result result-win">✓ Gagné</span>
-      </div>
+    <div class="prono-card" data-group="A">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe A</span><span class="prono-date">12 juin · 00h00</span></div>
+      <div class="prono-match">🇧🇿 Belize/Équipe A2 — 🇦🇷 Argentine</div>
+      <div class="prono-tip">📍 Guadalajara · Mexique</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
     </div>
 
-    <div class="prono-card">
-      <div class="prono-meta">
-        <span class="prono-league">Liga</span>
-        <span class="prono-date">Hier · 22h00</span>
-      </div>
-      <div class="prono-match">Real Madrid — Barça</div>
-      <div class="prono-tip">🎯 Match nul ou victoire Real (1X)</div>
-      <div class="prono-footer">
-        <div class="prono-cote">
-          <span class="cote-label">Cote</span>
-          <span class="cote-val">1.55</span>
-        </div>
-        <span class="prono-result result-win">✓ Gagné</span>
-      </div>
+    <div class="prono-card" data-group="A">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe A</span><span class="prono-date">15 juin · 21h00</span></div>
+      <div class="prono-match">🇲🇽 Mexique — 🇦🇷 Argentine</div>
+      <div class="prono-tip">📍 Estadio Azteca · Mexico City</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="A">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe A</span><span class="prono-date">19 juin · 21h00</span></div>
+      <div class="prono-match">🇿🇦 Afrique du Sud — 🇦🇷 Argentine</div>
+      <div class="prono-tip">📍 Monterrey · Mexique</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE B -->
+    <div class="prono-card" data-group="B">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe B</span><span class="prono-date">12 juin · 18h00</span></div>
+      <div class="prono-match">🇺🇸 États-Unis — 🏴󠁧󠁢󠁷󠁬󠁳󠁿 Équipe B2</div>
+      <div class="prono-tip">📍 Los Angeles · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="B">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe B</span><span class="prono-date">13 juin · 21h00</span></div>
+      <div class="prono-match">🇵🇦 Panama — 🇺🇸 États-Unis</div>
+      <div class="prono-tip">📍 Seattle · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE C -->
+    <div class="prono-card" data-group="C">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe C</span><span class="prono-date">13 juin · 18h00</span></div>
+      <div class="prono-match">🇨🇦 Canada — 🇨🇱 Chili</div>
+      <div class="prono-tip">📍 Toronto · Canada</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="C">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe C</span><span class="prono-date">14 juin · 03h00</span></div>
+      <div class="prono-match">🇦🇺 Australie — 🇳🇬 Nigeria</div>
+      <div class="prono-tip">📍 Vancouver · Canada</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE D -->
+    <div class="prono-card" data-group="D">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe D</span><span class="prono-date">14 juin · 21h00</span></div>
+      <div class="prono-match">🇩🇪 Allemagne — 🇯🇵 Japon</div>
+      <div class="prono-tip">📍 Dallas · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="D">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe D</span><span class="prono-date">15 juin · 00h00</span></div>
+      <div class="prono-match">🇨🇷 Costa Rica — 🇩🇪 Allemagne</div>
+      <div class="prono-tip">📍 Kansas City · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE E -->
+    <div class="prono-card" data-group="E">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe E</span><span class="prono-date">15 juin · 18h00</span></div>
+      <div class="prono-match">🇪🇸 Espagne — 🇲🇦 Maroc</div>
+      <div class="prono-tip">📍 Miami · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="E">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe E</span><span class="prono-date">16 juin · 00h00</span></div>
+      <div class="prono-match">🇧🇷 Brésil — 🇭🇷 Croatie</div>
+      <div class="prono-tip">📍 Houston · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE F -->
+    <div class="prono-card" data-group="F">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe F</span><span class="prono-date">16 juin · 18h00</span></div>
+      <div class="prono-match">🇵🇹 Portugal — 🇺🇿 Ouzbékistan</div>
+      <div class="prono-tip">📍 Atlanta · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="F">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe F</span><span class="prono-date">17 juin · 00h00</span></div>
+      <div class="prono-match">🇷🇴 Roumanie — 🇨🇴 Colombie</div>
+      <div class="prono-tip">📍 Philadelphia · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE G -->
+    <div class="prono-card" data-group="G">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe G</span><span class="prono-date">17 juin · 18h00</span></div>
+      <div class="prono-match">🇬🇧 Angleterre — 🇸🇳 Sénégal</div>
+      <div class="prono-tip">📍 Boston · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="G">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe G</span><span class="prono-date">18 juin · 00h00</span></div>
+      <div class="prono-match">🇳🇱 Pays-Bas — 🇶🇦 Qatar</div>
+      <div class="prono-tip">📍 San Francisco · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE H -->
+    <div class="prono-card" data-group="H">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe H</span><span class="prono-date">18 juin · 21h00</span></div>
+      <div class="prono-match">🇺🇾 Uruguay — 🇿🇲 Zambie</div>
+      <div class="prono-tip">📍 New York · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="H">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe H</span><span class="prono-date">19 juin · 00h00</span></div>
+      <div class="prono-match">🇨🇲 Cameroun — 🇨🇱 Chili</div>
+      <div class="prono-tip">📍 Dallas · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE I (FRANCE) -->
+    <div class="prono-card" data-group="I" style="border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.2);">
+      <div class="prono-meta"><span class="prono-league" style="background:var(--gold);color:#111;">🇫🇷 Groupe I</span><span class="prono-date">16 juin · 21h00</span></div>
+      <div class="prono-match">🇫🇷 France — 🇸🇳 Sénégal</div>
+      <div class="prono-tip">📍 MetLife Stadium · New York · M6 / beIN Sports</div>
+      <div class="prono-footer"><span class="prono-result result-pending">⭐ Match des Bleus</span></div>
+    </div>
+
+    <div class="prono-card" data-group="I">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe I</span><span class="prono-date">17 juin · 00h00</span></div>
+      <div class="prono-match">🇮🇶 Irak — 🇳🇴 Norvège</div>
+      <div class="prono-tip">📍 Gillette Stadium · Boston</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="I" style="border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.2);">
+      <div class="prono-meta"><span class="prono-league" style="background:var(--gold);color:#111;">🇫🇷 Groupe I</span><span class="prono-date">22 juin · 23h00</span></div>
+      <div class="prono-match">🇫🇷 France — 🇮🇶 Irak</div>
+      <div class="prono-tip">📍 Lincoln Financial Field · Philadelphie · M6 / beIN Sports</div>
+      <div class="prono-footer"><span class="prono-result result-pending">⭐ Match des Bleus</span></div>
+    </div>
+
+    <div class="prono-card" data-group="I">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe I</span><span class="prono-date">23 juin · 02h00</span></div>
+      <div class="prono-match">🇳🇴 Norvège — 🇸🇳 Sénégal</div>
+      <div class="prono-tip">📍 MetLife Stadium · New York</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="I" style="border-color: var(--gold); box-shadow: 0 0 0 2px rgba(201,168,76,0.2);">
+      <div class="prono-meta"><span class="prono-league" style="background:var(--gold);color:#111;">🇫🇷 Groupe I</span><span class="prono-date">26 juin · 21h00</span></div>
+      <div class="prono-match">🇳🇴 Norvège — 🇫🇷 France</div>
+      <div class="prono-tip">📍 Gillette Stadium · Boston · M6 / beIN Sports</div>
+      <div class="prono-footer"><span class="prono-result result-pending">⭐ Match des Bleus</span></div>
+    </div>
+
+    <div class="prono-card" data-group="I">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe I</span><span class="prono-date">26 juin · 21h00</span></div>
+      <div class="prono-match">🇸🇳 Sénégal — 🇮🇶 Irak</div>
+      <div class="prono-tip">📍 BMO Field · Toronto</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE J -->
+    <div class="prono-card" data-group="J">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe J</span><span class="prono-date">19 juin · 21h00</span></div>
+      <div class="prono-match">🇰🇷 Corée du Sud — 🇲🇾 Malaisie</div>
+      <div class="prono-tip">📍 Atlanta · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="J">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe J</span><span class="prono-date">20 juin · 00h00</span></div>
+      <div class="prono-match">🇩🇰 Danemark — 🇸🇦 Arabie Saoudite</div>
+      <div class="prono-tip">📍 Houston · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE K -->
+    <div class="prono-card" data-group="K">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe K</span><span class="prono-date">20 juin · 21h00</span></div>
+      <div class="prono-match">🇦🇷 Équateur — 🇯🇴 Jordanie</div>
+      <div class="prono-tip">📍 Seattle · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="K">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe K</span><span class="prono-date">21 juin · 00h00</span></div>
+      <div class="prono-match">🇬🇭 Ghana — 🇨🇿 République Tchèque</div>
+      <div class="prono-tip">📍 San Francisco · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <!-- GROUPE L -->
+    <div class="prono-card" data-group="L">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe L</span><span class="prono-date">21 juin · 21h00</span></div>
+      <div class="prono-match">🇮🇹 Italie — 🇲🇽 Mexique</div>
+      <div class="prono-tip">📍 Miami · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
+    </div>
+
+    <div class="prono-card" data-group="L">
+      <div class="prono-meta"><span class="prono-league">🏆 Groupe L</span><span class="prono-date">22 juin · 00h00</span></div>
+      <div class="prono-match">🇨🇻 Cap-Vert — 🇲🇽 Mexique</div>
+      <div class="prono-tip">📍 Los Angeles · USA</div>
+      <div class="prono-footer"><span class="prono-result result-pending">À venir</span></div>
     </div>
 
   </div>
+
+  <p style="text-align:center; margin-top:32px; color:var(--text-muted); font-size:0.82rem;">⏱ Horaires en heure française (Paris) · Calendrier non exhaustif, mis à jour au fur et à mesure</p>
 </section>
+
+<script>
+function filterGroup(group) {
+  const cards = document.querySelectorAll('#matchGrid .prono-card');
+  cards.forEach(card => {
+    card.style.display = (group === 'all' || card.dataset.group === group) ? 'block' : 'none';
+  });
+  document.querySelectorAll('[id^="btn-"]').forEach(btn => {
+    btn.style.background = 'var(--green-pale)';
+    btn.style.color = 'var(--green-deep)';
+  });
+  const active = document.getElementById('btn-' + group);
+  if (active) { active.style.background = 'var(--green-deep)'; active.style.color = '#fff'; }
+}
+</script>
 
 <!-- ANALYSES -->
 <section class="section" id="analyses">
